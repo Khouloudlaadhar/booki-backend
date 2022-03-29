@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose')
+
 const { hebergementValidator, updateHebergementValidator } = require('./utilities/validators');
 
 require('dotenv').config()
@@ -94,6 +96,15 @@ app.get('/hebergements/:id', (req, res) => {
 
 
 const PORT = process.env.PORT
+
+mongoose.connect(process.env.DB_CONNECTION, (err) => {
+    if (err) {
+        console.log('Could not connect to database');
+        console.log(err.message);
+        return;
+    }
+    console.log('Connection with db established');
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+})
 })
