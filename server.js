@@ -1,5 +1,5 @@
 const express = require('express');
-const { hebergementValidator } = require('./utilities/validators');
+const { hebergementValidator, updateHebergementValidator } = require('./utilities/validators');
 
 require('dotenv').config()
 
@@ -56,6 +56,20 @@ app.post('/hebergements', (req, res) => {
         hebergement: newHebergement
     })
 })
+
+app.put('/hebergements/:id', (req, res) => {
+    const { id } = req.params
+    console.log(req.body);
+    const validationResult = updateHebergementValidator.validate(req.body, { abortEarly: false })
+    if (validationResult.error) {
+        return res.json(validationResult)
+    }
+    hebergements = hebergements.map(t => t._id === id ? {...t, ...req.body} : t)
+    return res.json({
+        message: "Hebergement updated successfully"
+    })
+})
+
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {

@@ -7,6 +7,14 @@ const hebergementValidator = Joi.object({
   
 })
 
+const updateHebergementValidator = Joi.object({
+    photo: Joi.string(),
+    title: Joi.string().min(2).max(70),
+    description: Joi.string(),
+})
+
+
 module.exports = {
-    hebergementValidator
+    hebergementValidator,
+    updateHebergementValidator
 }
