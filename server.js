@@ -1,5 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
+const Hebergement = require('./models/Hebergement');
+
 
 const { hebergementValidator, updateHebergementValidator } = require('./utilities/validators');
 
@@ -38,25 +41,35 @@ app.get('/', (req, res) => {
     res.json({ message: "Booki API v1" })
 })
 
-app.get('/hebergements', (req, res) => {
-    res.json(hebergements)
+app.get('/hebergements', async (req, res) => {
+    try {
+        const resp = await Hebergement.find()
+        console.log(resp);
+        return res.json(resp)
+    } catch (err) {
+        console.log({ err })
+    }
 })
 
-app.post('/hebergements', (req, res) => {
+app.post('/hebergements', async (req, res) => {
     console.log(req.body);
+    const reqBody = req.body
     const validationResult = hebergementValidator.validate(req.body, { abortEarly: false })
     if (validationResult.error) {
         return res.json(validationResult)
     }
-    const newHebergement = {
-        _id: Date.now().toString(),
-        ...req.body
-    }
-    hebergements.push(newHebergement)
-    return res.json({
-        message: "Hebergement created successfully",
-        hebergement: newHebergement
-    })
+    try {
+        const hebergement = new Hebergement(reqBody)
+        const savedHebergement = await hebergement.save()
+        res.status(201).json({
+            message: 'Hebergement created successfully',
+            hebergement: savedHebergement 
+        })
+        } catch (error) {
+            res.status(500).json({ error: error.message })
+        }
+
+    
 })
 
 app.put('/hebergements/:id', (req, res) => {
