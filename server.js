@@ -80,7 +80,7 @@ app.put('/hebergements/:id', async (req, res) => {
         return res.json(validationResult)
     }
     try {
-        const hebergementFindUpdate= await Hebergement.findByIdAndUpdate(id, { $set: req.body }, { new: true })
+        const hebergementFindUpdate = await Hebergement.findByIdAndUpdate(id, { $set: req.body }, { new: true })
         return res.json({
             message: "Hebergement updated successfully",
             hebergementFindUpdate
@@ -88,19 +88,24 @@ app.put('/hebergements/:id', async (req, res) => {
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
-    
+
 })
 
-app.delete('/hebergements/:id', (req, res) => {
+app.delete('/hebergements/:id', async (req, res) => {
     const { id } = req.params
-    const hebergementToDelete = hebergements.find(t => t._id === id)
-    if (!hebergementToDelete) {
-        return res.status(404).json({ error: 'Hebergement not found' })
+    try {
+        const hebergementToDelete = await Hebergement.findByIdAndDelete(id)
+        if (!hebergementToDelete) {
+            return res.status(404).json({ error: 'Hebergement not found' })
+        }
+
+        return res.json({
+            message: "Hebergement deleted successfully"
+        })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+
     }
-    hebergements = hebergements.filter(t => t._id !== id)
-    return res.json({
-        message: "Hebergement deleted successfully"
-    })
 })
 
 app.get('/hebergements/:id', async (req, res) => {
