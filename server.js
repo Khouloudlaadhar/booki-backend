@@ -46,7 +46,15 @@ app.post('/hebergements', (req, res) => {
     if (validationResult.error) {
         return res.json(validationResult)
     }
-    return res.json({ok: 1})
+    const newHebergement = {
+        _id: Date.now().toString(),
+        ...req.body
+    }
+    hebergements.push(newHebergement)
+    return res.json({
+        message: "Hebergement created successfully",
+        hebergement: newHebergement
+    })
 })
 
 const PORT = process.env.PORT
