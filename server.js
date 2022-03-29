@@ -70,6 +70,18 @@ app.put('/hebergements/:id', (req, res) => {
     })
 })
 
+app.delete('/hebergements/:id', (req, res) => {
+    const { id } = req.params
+    const hebergementToDelete = hebergements.find(t => t._id === id)
+    if (!hebergementToDelete) {
+        return res.status(404).json({ error: 'Hebergement not found' })
+    }
+    hebergements = hebergements.filter(t => t._id !== id )
+    return res.json({
+        message: "Hebergement deleted successfully"
+    })
+})
+
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
