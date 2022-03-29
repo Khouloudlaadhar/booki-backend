@@ -72,17 +72,23 @@ app.post('/hebergements', async (req, res) => {
 
 })
 
-app.put('/hebergements/:id', (req, res) => {
+app.put('/hebergements/:id', async (req, res) => {
     const { id } = req.params
     console.log(req.body);
     const validationResult = updateHebergementValidator.validate(req.body, { abortEarly: false })
     if (validationResult.error) {
         return res.json(validationResult)
     }
-    hebergements = hebergements.map(t => t._id === id ? { ...t, ...req.body } : t)
-    return res.json({
-        message: "Hebergement updated successfully"
-    })
+    try {
+        const hebergementFindUpdate= await Hebergement.findByIdAndUpdate(id, { $set: req.body }, { new: true })
+        return res.json({
+            message: "Hebergement updated successfully",
+            hebergementFindUpdate
+        })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+    
 })
 
 app.delete('/hebergements/:id', (req, res) => {
