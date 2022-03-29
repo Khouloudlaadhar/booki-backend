@@ -1,8 +1,10 @@
-const express = require('express')
+const express = require('express');
+const { hebergementValidator } = require('./utilities/validators');
 
 require('dotenv').config()
 
 const app = express()
+app.use(express.json())
 
 let hebergements = [
     {
@@ -36,6 +38,15 @@ app.get('/', (req, res) => {
 
 app.get('/hebergements', (req, res) => {
     res.json(hebergements)
+})
+
+app.post('/hebergements', (req, res) => {
+    console.log(req.body);
+    const validationResult = hebergementValidator.validate(req.body, { abortEarly: false })
+    if (validationResult.error) {
+        return res.json(validationResult)
+    }
+    return res.json({ok: 1})
 })
 
 const PORT = process.env.PORT
