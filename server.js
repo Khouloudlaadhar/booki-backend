@@ -17,23 +17,23 @@ let hebergements = [
         photo: 'https://image.resabooking.com/images/image_panoramique/Iberostar_Averroes_3.jpg',
         title: 'Hotel de luxe',
         description: 'hotel se slocalise en plein centre de la zone touristique',
-        
-        
+
+
     },
     {
         _id: '5fcc1422e17929040331de0e',
         photo: 'https://viago.ca/wp-content/uploads/2016/12/shutterstock_528579178-768x432.jpg',
         title: 'hotel royal',
         description: 'etablissement hotel de 4 etoiles',
-      
+
     },
     {
         _id: '507f1f77bcf86cd799439011',
         photo: 'http://www.viaprestige-lifestyle.com/wp-content/uploads/2016/09/hotel-luxe-Bali-puti-walandari-ubud-660x330.jpg',
         title: 'hotel marhba',
         description: 'hotel profite des sejours au bord de mer ',
-      
-        
+
+
     }
 ];
 
@@ -63,13 +63,13 @@ app.post('/hebergements', async (req, res) => {
         const savedHebergement = await hebergement.save()
         res.status(201).json({
             message: 'Hebergement created successfully',
-            hebergement: savedHebergement 
+            hebergement: savedHebergement
         })
-        } catch (error) {
-            res.status(500).json({ error: error.message })
-        }
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 
-    
+
 })
 
 app.put('/hebergements/:id', (req, res) => {
@@ -79,7 +79,7 @@ app.put('/hebergements/:id', (req, res) => {
     if (validationResult.error) {
         return res.json(validationResult)
     }
-    hebergements = hebergements.map(t => t._id === id ? {...t, ...req.body} : t)
+    hebergements = hebergements.map(t => t._id === id ? { ...t, ...req.body } : t)
     return res.json({
         message: "Hebergement updated successfully"
     })
@@ -91,19 +91,23 @@ app.delete('/hebergements/:id', (req, res) => {
     if (!hebergementToDelete) {
         return res.status(404).json({ error: 'Hebergement not found' })
     }
-    hebergements = hebergements.filter(t => t._id !== id )
+    hebergements = hebergements.filter(t => t._id !== id)
     return res.json({
         message: "Hebergement deleted successfully"
     })
 })
 
-app.get('/hebergements/:id', (req, res) => {
+app.get('/hebergements/:id', async (req, res) => {
     const { id } = req.params
-    const hebergement= hebergements.find(t => t._id === id)
-    if (!hebergement) {
-        return res.status(404).json({ error: 'Hebergement not found' })
+    try {
+        const hebergementFind = await Hebergement.findById(id)
+        if (!hebergementFind) {
+            return res.status(404).json({ error: 'Hebergement not found' })
+        }
+        return res.json(hebergementFind)
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
     }
-    return res.json(hebergement)
 })
 
 
@@ -117,7 +121,7 @@ mongoose.connect(process.env.DB_CONNECTION, (err) => {
         return;
     }
     console.log('Connection with db established');
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-})
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    })
 })
