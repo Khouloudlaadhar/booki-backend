@@ -1,4 +1,5 @@
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const jsonwebtoken = require('jsonwebtoken');
 
 const User = require('../models/User');
 const { loginValidator } = require('../utilities/validators');
@@ -24,10 +25,12 @@ const loginUser = async (req, res) => {
             })
         }
         user.password = undefined
+        const token = jsonwebtoken.sign({ userId: user._id }, process.env.JWT_SECRET)
+        console.log(token)
         res.json({
             message: `Welcome ${user.username}`,
              user,
-            token: 'TOKEN'
+            token
         })
     } catch (error) {
         res.status(500).json({ error: error.message })
