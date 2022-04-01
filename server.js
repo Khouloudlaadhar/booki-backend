@@ -4,7 +4,7 @@ const cors = require('cors');
 
 
 const hebergementRouter=require('./routes/hebergements');
-
+const usersRouter = require('./routes/users')
 
 require('dotenv').config()
 
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/hebergements', hebergementRouter)
-
+app.use('/auth', usersRouter)
 
 const PORT = process.env.PORT
 

@@ -13,8 +13,19 @@ const updateHebergementValidator = Joi.object({
     description: Joi.string(),
 })
 
+const registerValidator = Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required().min(6)
+})
+const loginValidator = Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required()
+})
+
 
 module.exports = {
     hebergementValidator,
-    updateHebergementValidator
+    updateHebergementValidator,
+    registerValidator,
+    loginValidator
 }
