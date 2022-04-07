@@ -4,6 +4,8 @@ const hebergementValidator = Joi.object({
     photo: Joi.string().required(),
     title: Joi.string().required().min(2).max(70),
     description: Joi.string(),
+    rating:Joi.number(),
+    adress:Joi.string().required()
 
 })
 
@@ -11,6 +13,8 @@ const updateHebergementValidator = Joi.object({
     photo: Joi.string(),
     title: Joi.string().min(2).max(70),
     description: Joi.string(),
+    rating:Joi.number(),
+    adress:Joi.string().required()
 })
 
 const registerValidator = Joi.object({
