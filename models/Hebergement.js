@@ -10,6 +10,10 @@ const hebergementSchema = new Schema({
         required: true
     },
     description: String,
+    categories:{
+        type: String,
+        required: true
+    },
     rating: Number,
     adress: {
         type: String,
