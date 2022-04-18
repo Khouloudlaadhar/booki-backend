@@ -5,6 +5,8 @@ const cors = require('cors');
 
 const hebergementRouter=require('./routes/hebergements');
 const usersRouter = require('./routes/users')
+const passwordReset = require('./routes/passwordReset')
+
 
 require('dotenv').config()
 
@@ -17,8 +19,9 @@ app.get('/', (req, res) => {
     res.json({ message: "Booki API v1" })
 })
 
-app.use('/hebergements', hebergementRouter)
 app.use('/auth', usersRouter)
+app.use('/password-reset', passwordReset)
+app.use('/hebergements', hebergementRouter)
 
 const PORT = process.env.PORT
 

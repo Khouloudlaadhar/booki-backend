@@ -29,6 +29,10 @@ const loginValidator = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required()
 })
+const passwordResetValidator= Joi.object({
+    email: Joi.string().email().required(),
+
+})
 
 
 
@@ -36,5 +40,6 @@ module.exports = {
     hebergementValidator,
     updateHebergementValidator,
     registerValidator,
-    loginValidator
+    loginValidator,
+    passwordResetValidator
 }
