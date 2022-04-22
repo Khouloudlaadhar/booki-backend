@@ -6,6 +6,7 @@ const cors = require('cors');
 const hebergementRouter=require('./routes/hebergements');
 const usersRouter = require('./routes/users')
 const passwordReset = require('./routes/passwordReset')
+const contactRouter = require('./routes/contact')
 
 
 require('dotenv').config()
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/auth', usersRouter)
 app.use('/password-reset', passwordReset)
 app.use('/hebergements', hebergementRouter)
+app.use('/contact', contactRouter)
 
 const PORT = process.env.PORT
 
