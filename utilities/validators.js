@@ -4,9 +4,13 @@ const hebergementValidator = Joi.object({
     photo: Joi.string().required(),
     title: Joi.string().required().min(2).max(70),
     description: Joi.string(),
-    categories:Joi.string().required(),
-    rating:Joi.number(),
-    adress:Joi.string().required()
+    categories: Joi.string().required(),
+    rating: Joi.number().min(0).max(5),
+    adress: Joi.string().required(),
+    city: Joi.string().required(),
+    price: Joi.number().required()
+    
+
 
 })
 
@@ -14,9 +18,12 @@ const updateHebergementValidator = Joi.object({
     photo: Joi.string(),
     title: Joi.string().min(2).max(70),
     description: Joi.string(),
-    categories:Joi.string().required(),
-    rating:Joi.number(),
-    adress:Joi.string().required()
+    categories: Joi.string().required(),
+    rating: Joi.number().min(0).max(5),
+    adress: Joi.string().required(),
+    city: Joi.string().required(),
+    price: Joi.number().required()
+    
 })
 
 const registerValidator = Joi.object({
@@ -29,11 +36,11 @@ const loginValidator = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required()
 })
-const passwordResetValidator= Joi.object({
+const passwordResetValidator = Joi.object({
     email: Joi.string().email().required(),
 
 })
-const contactValidator=Joi.object({
+const contactValidator = Joi.object({
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     email: Joi.string().email().required(),

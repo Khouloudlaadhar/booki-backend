@@ -14,12 +14,27 @@ const hebergementSchema = new Schema({
         type: String,
         required: true
     },
-    rating: Number,
+    rating: {
+        type:Number,
+        min:0,
+        max:5
+    } ,
     adress: {
         type: String,
         required: true
+    },
+    city:{
+        type: String,
+        required: true
+    },
+    price:{
+        type: Number,
+        required: true
+    },
+    rooms:{
+        type:[String],
+        required: true
     }
-  
 })
 
 module.exports = model('Hebergement', hebergementSchema)
