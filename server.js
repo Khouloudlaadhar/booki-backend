@@ -4,6 +4,7 @@ const cors = require('cors');
 
 
 const hebergementRouter=require('./routes/hebergements');
+const activitiesRouter=require('./routes/activities');
 const usersRouter = require('./routes/users')
 const passwordReset = require('./routes/passwordReset')
 const contactRouter = require('./routes/contact')
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 app.use('/auth', usersRouter)
 app.use('/password-reset', passwordReset)
 app.use('/hebergements', hebergementRouter)
+app.use('/activities', activitiesRouter)
 app.use('/contact', contactRouter)
 
 const PORT = process.env.PORT

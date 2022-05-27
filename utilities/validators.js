@@ -48,6 +48,28 @@ const contactValidator = Joi.object({
     message: Joi.string().required().messages()
 })
 
+const activitiesValidator = Joi.object({
+    photo: Joi.string().required(),
+    title: Joi.string().required().min(2).max(70),
+    description: Joi.string(),
+    adress: Joi.string().required(),
+    city: Joi.string().required()
+
+    
+
+
+})
+
+const updateActivitiesValidator = Joi.object({
+    photo: Joi.string().required(),
+    title: Joi.string().required().min(2).max(70),
+    description: Joi.string(),
+    adress: Joi.string().required(),
+    city: Joi.string().required()
+    
+})
+
+
 
 
 module.exports = {
@@ -56,5 +78,7 @@ module.exports = {
     registerValidator,
     loginValidator,
     passwordResetValidator,
-    contactValidator
+    contactValidator,
+    activitiesValidator,
+    updateActivitiesValidator
 }
