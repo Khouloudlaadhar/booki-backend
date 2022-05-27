@@ -19,4 +19,4 @@ const userSchema = new Schema({
     verified: { type: Boolean, default: false },
 }, { timestamps: true })
 
-module.exports = model('User', userSchema)
+module.exports = model('User1', userSchema)
