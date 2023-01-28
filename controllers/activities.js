@@ -1,4 +1,4 @@
-const activities = require('../models/activities');
+const activities = require('../models/Activities');
 const { activitiesValidator, updateActivitiesValidator } = require('../utilities/validators');
 
 
