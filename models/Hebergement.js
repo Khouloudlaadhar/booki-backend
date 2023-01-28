@@ -34,7 +34,19 @@ const hebergementSchema = new Schema({
     rooms:{
         type:[String],
         required: true
-    }
+    },
+    reservation: [ 
+        {
+            userId:  {
+                type: Schema.Types.ObjectId,
+                required: true,
+                ref:"User"
+            },
+          start: Date,
+          end: Date,
+         
+        }
+    ]
 })
 
 module.exports = model('Hebergement', hebergementSchema)
